@@ -1,0 +1,34 @@
+\lhead{\emph{Conclusion}}
+
+
+
+
+\chapter{Conclusion}
+\section{Contributions}
+In summary, this thesis proposes two new strategies to optimize \learnindex: the Histogram and Partially Sorted Insertion Strategy. The Histogram method aims to capture the distribution and pattern of the data by maintaining a frequency array in each node. The gaps are distributed where they are needed the most, based on the data distribution, which helps to minimize the number of child nodes and improve the operation performance.
+
+The Partially Sorted Insertion Strategy works by delaying the creation of new nodes until the amount of $\epsilon$ is full. This approach helps to reduce the number of child nodes created and optimize the memory consumption of the \learnindex.
+
+To evaluate the performance of the proposed methods, we conducted experiments on various parameters such as memory consumption, the number of child nodes, and operation performance, and compared the results with the baseline \acrshort{lipp} method. The experiments show that the Histogram outperform the baseline \acrshort{lipp} method and partially sorted insertion strategy in terms of memory consumption and operation performance by up to \textbf{$2\times - 3\times$}. We hope that our algorithms complement the existing studies on the dynamic learned index.
+
+\section{Limitations}
+Despite the advantages of the histogram and partially sorted, there are still some limitations to consider. One limitation of the histogram is its performance on real-world datasets, where it does not capture the distribution as well as the raw \acrshort{lipp}. This is because histogram creates child nodes whenever there is a conflict, which can significantly affect the operation performance. In contrast, \acrshort{lipp} creates less child nodes and performs better in capturing the distribution of real-world datasets.
+
+Another limitation of partially sorted is that it still does not perform as well as \acrshort{lipp} and histogram due to the extra local search that it has to perform. While partially sorted delays new node creation, it requires additional operations to maintain its partially sorted property, making it slower than \acrshort{lipp} and histogram. Additionally, our research mainly focuses on the efficiency and memory consumption of these \learnindex structures, without delving into their model accuracy. Future research could explore the triangular tradeoff between model accuracy, size, and efficiency in partially sorted.
+
+In summary, while histogram and partially sorted have advantages over other \learnindex structures, they still have limitations that need to be considered. Understanding these limitations can help researchers and practitioners choose the best \learnindex structure for their specific use case.
+
+\section{Future Work}
+In this section, we put forward some potential avenues for future research that could enhance both the histogram and partially sorted array, with the goal of further improving the performance of the \learnindex. By doing so, we hope to provide guidance for future studies that can build upon our findings and push the limits of what is possible with the \learnindex.
+\subsection{Histogram}
+ One limitation of the histogram is that it assumes the dataset has a fixed and known distribution. In practice, this is often not the case, as real-world datasets may have outliers and do not follow a known distribution. This limitation can affect the accuracy of the histogram, leading to suboptimal query processing performance. Therefore, there is a need to improve the histogram to support dynamic datasets with changing distributions.
+
+To address this limitation, one possible improvement is to add a mechanism to the histogram that triggers the rebuilding process when certain conditions are met. This mechanism can be based on statistical measures such as the variance of the data or the deviation from the expected distribution. When the histogram detects that the data's distribution has significantly changed, it can rebuild the histogram with the new distribution parameters.
+
+This improvement can benefit many database systems that rely on histograms for query processing. By adapting to the changing distribution of the data, the histogram can provide more accurate estimates of the frequency distribution, leading to better query performance.
+
+
+\subsection{Partially Sorted}
+One possible improvement for the current work of the Partially Sorted Insertion Strategy is to introduce a parameter to keep track of the number of partially sorted keys in each node. With this parameter, we can set a threshold for the percentage of partially sorted keys in each node. For example, if the percentage of partially sorted keys in a node exceeds $50\%$ of the node size, then the node will perform a recursive rebuild. This threshold can be adjusted based on the specific dataset and the performance requirements of the application.
+
+By introducing this improvement, we can reduce the number of partially sorted keys that have to be collected and rebuilt during insertion, which can improve the overall insertion performance of the partially sorted array. Moreover, it can also prevent the accumulation of too many partially sorted keys in a node, which can cause the tree to grow too deep and negatively affect the query performance.

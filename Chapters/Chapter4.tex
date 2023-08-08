@@ -1,0 +1,33 @@
+\lhead{\emph{Problem Formulation}}
+\chapter{Problem Formulation}
+\begin{definition}
+ (``\emph{Conflict}'') Consider an insertion of a new key to an array stored in a tree node; if the location where the new key should be put in has been occupied, then a \emph{conflict} occurs.
+\label{def:conflict}
+\end{definition}
+\begin{definition}
+(``\emph{Gaps}'') Gaps is reserved in the gapped array in between elements to support new keys insertion.  
+\label{def:gap}
+\end{definition}
+
+\textbf{Where to place gaps such that the Learned Index is efficient to perform operations like insertion, deletion and query ?}
+ 
+ The \acrfull{lipp} tree structure consists of nodes that hold a gapped array, which contains data, pointers to child nodes, and gaps. Gaps are particularly important for \acrfull{tbli} as they enable support for subsequent key insertions and help reduce the number of conflicts and element shifts \cite{ALEX,PGM,fittingtree,LIPP}. \acrshort{tbli} handle conflicts in different ways, with \acrshort{alex} using the shifting method \cite{ALEX} and \acrshort{lipp} creating a new child node \cite{LIPP}. However, while this method ensures that items remain sorted, it comes with the added computational cost of performing shifts or creating a new node during insertion operations. Shifting requires knowledge of the location of the nearest gap to perform the shift, while creating a new node requires following pointers during range queries.
+
+How can we add gaps to a set of keys with increasing positions $\{x, y\}$ in a way that minimizes conflicts while still maintaining or partially maintaining the monotonicity of the key-position relationship? The number of gaps added should be limited to a maximum value of $M$. The distribution of the density of keys in the set, ${X_1, X_2, \cdots, X_n\ | X \in \mathbb{Q}}$, is represented by $Pr[a \leq X_n \leq b]$. The number of gaps inserted between key $X_i$ and $X_{i+1}$ is $m$, and the total number of gaps in the gapped array should not exceed $M$ (i.e., $\sum_{X_1}^{X_n}{m} \leq M$).
+
+One of the main challenges in optimizing the performance of learned indexes is handling dynamic data. When new data is inserted into the data structure, it may follow a different distribution than the existing keys, making it difficult to determine where to insert gaps to minimize conflicts. However, if the newly inserted data follows the same distribution as the existing keys \textbf{static}, the problem becomes simpler to handle. In this case, we can focus on identifying places where the key density is highest and insert gaps accordingly. By doing so, we can reduce the number of conflicts and avoid the need to create new nodes.
+
+On the other hand, for \textbf{dynamic} data, where the distribution of inserted keys may change over time, it is much harder to tackle the problem of minimizing conflicts. In this case, we need to be able to detect slowly changing distributions and adjust the placement of gaps accordingly. This can be achieved by monitoring the distribution of inserted keys and identifying areas where the density has shifted. Once these areas have been identified, we can insert gaps to reduce the number of conflicts.
+
+Reducing the number of conflicts in each node is crucial to ensuring optimal performance of learned indexes. When conflicts occur, we may need to perform extra computations like creating new nodes, which can lead to a larger tree and poor lookup times. Therefore, by minimizing the number of conflicts, we can avoid these extra computations and keep the tree size manageable. Ultimately, this leads to faster lookup times and more efficient use of resources.
+
+Furthermore, expanding gapped arrays and inserting gaps between keys can be a costly operation in terms of retraining the machine learning models used in the indexes. In order to learn the new positions of the keys after gaps have been inserted, the models need to be retrained. However, the amount of time required to retrain the models can vary depending on the complexity of the model used \cite{CasedLearnedIndex}. For instance, a simple linear regression model is used, the retraining process should be fast, as the model only contains multiplications \cite{CasedLearnedIndex,ALEX,LIPP}. However, more complex models, such as neural networks, may take longer to train on larger datasets, making it impractical to retrain the models frequently \cite{CasedLearnedIndex}. Therefore, finding a balance between the complexity of the model and the time required to retrain it is essential when optimizing dynamic learned indexes. 
+
+
+
+The current state-of-the-art dynamic \learnindex, \acrshort{lipp}, supports updates by optimizing the keys to fit a linear model. This ensures that the model always predicts the correct position of the keys. However,  \acrshort{lipp} creates a new node for each update, which can make operations like insertion and deletion bounded by the height of the tree.
+
+The goal of this thesis is to design a dynamic \learnindex that supports updates and performs better than \acrshort{lipp} in terms of insertion and deletion time. To do this, we optimize the placement of gaps in the learnindex. This allows the \learnindex to adapt to the distribution of keys and place gaps in densely packed areas, which reduce the number of new child nodes that need to be created.
+
+
+

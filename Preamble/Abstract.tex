@@ -1,0 +1,7 @@
+
+\addtotoc{Abstract}  % Add the "Abstract" page entry to the Contents
+\abstract{
+\addtocontents{toc}{\vspace{1em}}  % Add a gap in the Contents, for aesthetics
+
+The \btree has been the dominant indexing method in database management systems, used by most SQL databases. Recent enhancements take advantage of hardware optimizations such as caching and memory usage. However, the \btree does not make use of existing data patterns and aims to work well for the worst cases. In contrast, the learned index offers a promising approach to optimizing indexing by leveraging machine learning models to predict the positions of keys and data in the data structure. Initial research on learned index showed significant improvements in search performance and memory consumption compared to traditional \btree. However, the learned index has faced challenges in supporting insertion operations efficiently. While some approaches have tried to address this issue, they still require overhead for insertion and conflict resolution. This project proposes a new approach to strategically leaving gaps in the array based on the data distribution and optimizing node creation in the learned index. Experimental results show that our algorithm can significantly reduce conflicts and improve read and write operation performance. We believe this approach can be applied to other tree-based learned index structures and offer significant improvements in database management systems.
+}
